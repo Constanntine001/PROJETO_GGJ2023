@@ -1,7 +1,6 @@
 ﻿//Maded by Pedro M Marangon
 using PedroUtils;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Items
@@ -13,11 +12,7 @@ namespace Items
 
 		[SerializeField] private List<ItemSO> items;
 
-
-		private void Start()
-		{
-			RebuildUI(items);
-		}
+		private void Start() => RebuildUI(items);
 
 		private void Clear()
 		{

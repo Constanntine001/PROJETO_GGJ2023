@@ -16,6 +16,15 @@ namespace Items
 		[SerializeField] private Image itemImage;
 		[SerializeField] private TMP_Text priceText;
 
+
+		private void Start()
+		{
+			if (TryGetComponent(out DragDetector dragDetector))
+			{
+				dragDetector.DragAndDropInformation(item);
+			}
+		}
+
 		public void SetItem(ItemSO item) => this.item = item;
 
 		public void UpdateUI()
@@ -35,11 +44,6 @@ namespace Items
 			}
 
 			if(priceText != null) priceText.text = $"<sprite=1> {item.Price}";
-		}
-
-		public void Drop(Vector3 position)
-		{
-			//TODO: Drop
 		}
 	}
 }
