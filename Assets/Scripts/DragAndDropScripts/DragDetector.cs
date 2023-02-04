@@ -1,14 +1,31 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using Items;
 
 public class DragDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     bool mouseEmCima = false;
     bool arrastando = false;
 
-    [SerializeField] GameObject pqp; // Objeto teste
+    [SerializeField] ItemSO infoItem;
+
+    GameObject dragCanvas;
+    GameObject DragAndDropGhost;
+
+    public void Start()
+    {
+        // Acha o canvas que será utilizado para arrastar o objeto sobre a UI
+        dragCanvas = GameObject.Find("CANVAS_DRAG_DROP");
+    }
+
+    public void DragAndDropInformation(ItemSO input_infoItem)
+    {
+        infoItem = input_infoItem;
+    }
 
     // Update is called once per frame
     void Update()
@@ -16,26 +33,32 @@ public class DragDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         // Caso o mouse esteja em cima do item e o jogador clicar nele
         if(mouseEmCima && Input.GetMouseButtonDown(0))
         {
-            // Flag arrastando ativa
-            arrastando = true;
+            if(dragCanvas.transform.childCount <= 0)
+            {
+                // Flag arrastando ativa
+                arrastando = true;
+                DragAndDropGhost = new GameObject("ItemDragDrop", typeof(RectTransform), typeof(Image));
+                DragAndDropGhost.transform.SetParent(dragCanvas.transform);
+                var imageComponent = DragAndDropGhost.GetComponent<Image>();
+                imageComponent.sprite = infoItem.Sprite;
+                imageComponent.color = new Color(1f, 1f, 1f, 0.4f);
+            }
+
         }
 
         // Se estiver arrastando e o mouse estiver ainda clicado
         if(arrastando && Input.GetMouseButton(0))
         {
-            // CÓDIGO DE ARRASTE DE ITEM AQUI
-
-                var posicaoMouse = Input.mousePosition;
-                pqp.transform.position = Camera.main.ScreenToWorldPoint(posicaoMouse);
-
-            // -------------------------------
-
+            DragAndDropGhost.transform.position = Input.mousePosition;
         }
         // SE ESTIVER ARRASTANDO MAS BTN NAO CLICADO
         else if(arrastando)
         {
             //ARRASTE ACABOU
             arrastando = false;
+            Destroy(DragAndDropGhost);
+
+            //... codigo de colliders talvez?
         }
     }
 
