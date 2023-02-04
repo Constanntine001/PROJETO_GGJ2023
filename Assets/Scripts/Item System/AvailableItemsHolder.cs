@@ -13,6 +13,12 @@ namespace Items
 
 		[SerializeField] private List<ItemSO> items;
 
+
+		private void Start()
+		{
+			RebuildUI(items);
+		}
+
 		private void Clear()
 		{
 			for (int i = parent.transform.childCount - 1; i >= 0; i--)
@@ -22,8 +28,11 @@ namespace Items
 		}
 
 		[ContextMenu("Test Item List")]
-		private void TestItemList() => RebuildUI(items);
-
+		private void TestItemList()
+		{
+			if (!Application.isPlaying) return;
+			RebuildUI(items);
+		}
 
 		public void RebuildUI(List<ItemSO> items)
 		{
@@ -33,9 +42,8 @@ namespace Items
 			{
 				ItemUI instance = Instantiate(prefab, parent);
 				instance.SetItem(item);
+				instance.UpdateUI();
 			}
-
-			transform.Cast<ItemUI>().ToList().ForEach(itemUI => itemUI.UpdateUI());
 		}
 
 	}
