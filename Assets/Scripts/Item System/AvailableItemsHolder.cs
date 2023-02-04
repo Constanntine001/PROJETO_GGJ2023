@@ -14,14 +14,6 @@ namespace Items
 
 		private void Start() => RebuildUI(items);
 
-		private void Clear()
-		{
-			for (int i = parent.transform.childCount - 1; i >= 0; i--)
-			{
-				parent.transform.GetChild(i).Suicide();
-			}
-		}
-
 		[ContextMenu("Test Item List")]
 		private void TestItemList()
 		{
@@ -31,7 +23,7 @@ namespace Items
 
 		public void RebuildUI(List<ItemSO> items)
 		{
-			Clear();
+			parent.Clear();
 
 			foreach (ItemSO item in items)
 			{

@@ -42,27 +42,36 @@ public class DragDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     void CriarWorldDropGhost()
     {
-        WorldDropGhost = new GameObject("ItemDragDrop", typeof(SpriteRenderer));
-        WorldDropGhost.transform.localScale = new Vector3(1, 1, 1);
-        var imgItemBonsai = WorldDropGhost.GetComponent<SpriteRenderer>();
-        imgItemBonsai.sprite = infoItem.Sprite;
-        imgItemBonsai.transform.localScale = imgItemBonsai.transform.localScale * infoItem.Scale;
-        WorldDropGhost.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        WorldDropGhost = CreateSpriteRenderer("ItemDragDropGhost", typeof(SpriteRenderer)).gameObject;
+        SetTransform(WorldDropGhost.transform);
     }
 
     void CriarItemBonsai()
     {
-        var NovoItemBonsai = new GameObject("ItemDragDrop", typeof(SpriteRenderer));
-        NovoItemBonsai.transform.localScale = new Vector3(1, 1, 1);
-        var imgItemBonsai = NovoItemBonsai.GetComponent<SpriteRenderer>();
-        imgItemBonsai.sprite = infoItem.Sprite;
-        imgItemBonsai.transform.localScale = imgItemBonsai.transform.localScale * infoItem.Scale;
-        NovoItemBonsai.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        NovoItemBonsai.transform.SetParent(Bonsai_Bowl.transform);
+        var NovoItemBonsai = CreateSpriteRenderer("ItemDragDropBonsai", typeof(SpriteRenderer));
+        SetTransform(NovoItemBonsai);
     }
 
-    // Update is called once per frame
-    void Update()
+
+	private Transform CreateSpriteRenderer(string name, params Type[] components)
+	{
+        Transform obj = new GameObject(name, components).transform;
+        obj.localScale = Vector3.one;
+		return obj;
+	}
+
+	private void SetTransform(Transform obj)
+    {
+		obj.localScale = new Vector3(1, 1, 1);
+		var itemRenderer = obj.GetComponent<SpriteRenderer>();
+		itemRenderer.sprite = infoItem.Sprite;
+		obj.localScale *= infoItem.Scale;
+		obj.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		obj.SetParent(Bonsai_Bowl.transform);
+	}
+
+	// Update is called once per frame
+	void Update()
     {
         // Caso o mouse esteja em cima do item e o jogador clicar nele
         if(mouseEmCima && Input.GetMouseButtonDown(0))
@@ -72,7 +81,7 @@ public class DragDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
                 // Flag arrastando ativa
                 arrastando = true;
                 CriarCanvasDropGhost();
-                CriarWorldDropGhost();
+               // CriarWorldDropGhost();
             }
 
         }

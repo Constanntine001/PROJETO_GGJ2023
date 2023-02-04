@@ -8,9 +8,9 @@ namespace Economy
 	{
 		[SerializeField] private TMP_Text balanceText;
 
-		private PlayerBalance playerBalance;
+		private PlayerInventory playerBalance;
 
-		private void Awake() => playerBalance = FindObjectOfType<PlayerBalance>();
+		private void Awake() => playerBalance = FindObjectOfType<PlayerInventory>();
 
 		private void OnEnable() => playerBalance.OnMoneyChanged += UpdateMoney;
 		private void OnDisable() => playerBalance.OnMoneyChanged -= UpdateMoney;
