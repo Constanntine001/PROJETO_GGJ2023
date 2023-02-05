@@ -33,5 +33,8 @@ namespace Economy
 			availableItemsHolder.RebuildUI(UnlockedItems);
 		}
 
+		[ContextMenu("Add 100 money")]
+		private void Add100Money() => AddMoney(100);
+
 	}
 }
