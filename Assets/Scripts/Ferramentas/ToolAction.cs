@@ -23,15 +23,12 @@ public class ToolAction : MonoBehaviour
         
     }
 
-    void OnCollisionEnter2D(Collision2D coll) {
-        if (coll.gameObject.name == nomeCollider) {
+    void OnTriggerStay2D(Collider2D coll) {
+        Debug.Log("Collide");
+        if (coll.name == nomeCollider) {
             toolActionEvent.Invoke();
         }
     }
 
-    void OnCollisionExit2D(Collision2D coll) {
-        if (coll.gameObject.name == nomeCollider) {
-            stopToolActionEvent.Invoke();
-        }
-    }
+   
 }

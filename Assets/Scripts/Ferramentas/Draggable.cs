@@ -9,6 +9,10 @@ public class Draggable : MonoBehaviour
 
     private bool isDragging = false;
 
+    private void Start() {
+        myCam = Camera.main;
+    }
+
     private void Update()
     {
         if (isDragging)
