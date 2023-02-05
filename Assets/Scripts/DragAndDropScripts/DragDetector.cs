@@ -8,29 +8,36 @@ using Items;
 
 public class DragDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    //Controles do drag
     bool mouseEmCima = false;
     bool arrastando = false;
 
-    [SerializeField] ItemSO infoItem;
-
-
+    //Máximo de itens por bonsai
     int maxBonsaiItems = 5;
 
+    //GameObjects que já são criados logo no ínicio
+    GameManager gm;
     GameObject dragCanvas;
+    GameObject Bonsai_Bowl;
+
+    //Itens instanciados
+    [SerializeField] ItemSO infoItem;
     GameObject CanvasDropGhost;
     GameObject WorldDropGhost;
-    GameObject Bonsai_Bowl;
+    // Para criar o collider automatico
+    float colliderDiff = 0f;
 
     public void Start()
     {
-        // Acha o canvas que será utilizado para arrastar o objeto sobre a UI
-        dragCanvas = GameObject.Find("CANVAS_DRAG_DROP");
-        Bonsai_Bowl = GameObject.Find("BONSAI_BOWL");
+        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+        dragCanvas = gm.CANVAS_DRAG_DROP;
+        Bonsai_Bowl = gm.ACTIVE_BONSAI;
     }
 
     public void DragAndDropInformation(ItemSO input_infoItem)
     {
         infoItem = input_infoItem;
+        colliderDiff = 1f - (1f - infoItem.UIScale);
     }
 
     void CriarCanvasDropGhost()
@@ -46,7 +53,7 @@ public class DragDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     void CriarWorldDropGhost()
     {
         WorldDropGhost = CreateSpriteRenderer("ItemDragDropGhost", typeof(SpriteRenderer), typeof(BoxCollider2D)).gameObject;
-        WorldDropGhost.GetComponent<BoxCollider2D>().size = new Vector2(1 - infoItem.UIScale, 1 - infoItem.UIScale);
+        WorldDropGhost.GetComponent<BoxCollider2D>().size = new Vector2(colliderDiff,colliderDiff);
         WorldDropGhost.GetComponent<BoxCollider2D>().isTrigger = true;
         WorldDropGhost.GetComponent<SpriteRenderer>().color = new Color(1f,1f,1f,0f);
         SetTransform(WorldDropGhost.transform, false);
@@ -55,7 +62,7 @@ public class DragDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     void CriarItemBonsai()
     {
         var NovoItemBonsai = CreateSpriteRenderer("ItemDragDropBonsai", typeof(SpriteRenderer), typeof(BoxCollider2D), typeof(Rigidbody2D));
-        NovoItemBonsai.GetComponent<BoxCollider2D>().size = new Vector2(1 - infoItem.UIScale, 1 - infoItem.UIScale);
+        NovoItemBonsai.GetComponent<BoxCollider2D>().size = new Vector2(colliderDiff, colliderDiff);
         NovoItemBonsai.GetComponent<BoxCollider2D>().isTrigger = false;
         NovoItemBonsai.GetComponent<Rigidbody2D>().gravityScale = 0;
         NovoItemBonsai.GetComponent<Rigidbody2D>().constraints =  RigidbodyConstraints2D.FreezeRotation;
@@ -79,6 +86,7 @@ public class DragDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 		obj.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if(parent)
         {
+            Bonsai_Bowl = gm.ACTIVE_BONSAI;
             obj.SetParent(Bonsai_Bowl.transform);
         }
 	}
@@ -96,7 +104,6 @@ public class DragDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
                 CriarCanvasDropGhost();
                 CriarWorldDropGhost();
             }
-
         }
 
         // Se estiver arrastando e o mouse estiver ainda clicado
@@ -134,6 +141,8 @@ public class DragDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     bool CheckBonsaiCollisions()
     {
+        Bonsai_Bowl = gm.ACTIVE_BONSAI;
+
         var dropGhostCollider = WorldDropGhost.GetComponent<Collider2D>();
         if(dropGhostCollider.IsTouching(Bonsai_Bowl.GetComponent<Collider2D>()))
         {
