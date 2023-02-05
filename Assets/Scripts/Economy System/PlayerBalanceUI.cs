@@ -15,6 +15,6 @@ namespace Economy
 		private void OnEnable() => playerBalance.OnMoneyChanged += UpdateMoney;
 		private void OnDisable() => playerBalance.OnMoneyChanged -= UpdateMoney;
 
-		private void UpdateMoney() => balanceText.text = $"<sprite=1>$ {playerBalance.Money}";
+		private void UpdateMoney() => balanceText.text = $"$ {playerBalance.Money}";
 	}
 }

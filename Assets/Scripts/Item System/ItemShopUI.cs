@@ -51,7 +51,7 @@ namespace Items
 			itemImage.sprite = item.Sprite;
 			itemImage.color = Color.white;
 
-			priceText.text = $"<sprite=1> {item.Price}";
+			priceText.text = $"$ {item.Price}";
 
 			PlayerInventory playerInventory = FindObjectOfType<PlayerInventory>();
 			bool playerContainsItem = playerInventory.UnlockedItems.Contains(item);

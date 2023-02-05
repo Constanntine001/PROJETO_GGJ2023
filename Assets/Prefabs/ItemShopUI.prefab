@@ -192,8 +192,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 0
-    m_Right: 0
+    m_Left: 10
+    m_Right: 10
     m_Top: 10
     m_Bottom: 10
   m_ChildAlignment: 0
@@ -592,7 +592,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: -5177388603050735206, guid: 36d1d1def89b4354bb5cdc3acd81735d, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -745,7 +745,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <sprite=1> 435
+  m_text: $ 435
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4072ec85c4c897e428e546fa828d3a7f, type: 2}
   m_sharedMaterial: {fileID: -4587369480265201520, guid: 4072ec85c4c897e428e546fa828d3a7f, type: 2}
@@ -999,8 +999,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 7482667652216324306, guid: 297b0f3fd41ee9f44a190613973ce8ff, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: -5177388603050735206, guid: 36d1d1def89b4354bb5cdc3acd81735d, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
