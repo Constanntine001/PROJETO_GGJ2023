@@ -42,8 +42,11 @@ public class DragDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     void CriarWorldDropGhost()
     {
-        WorldDropGhost = CreateSpriteRenderer("ItemDragDropGhost", typeof(SpriteRenderer)).gameObject;
-        SetTransform(WorldDropGhost.transform);
+        WorldDropGhost = CreateSpriteRenderer("ItemDragDropGhost", typeof(SpriteRenderer), typeof(BoxCollider2D)).gameObject;
+        WorldDropGhost.GetComponent<BoxCollider2D>().size = new Vector2(1 - infoItem.UIScale, 1 - infoItem.UIScale);
+        WorldDropGhost.GetComponent<BoxCollider2D>().isTrigger = true;
+        WorldDropGhost.GetComponent<SpriteRenderer>().color = new Color(1f,1f,1f,0f);
+        SetTransform(WorldDropGhost.transform, false);
     }
 
     void CriarItemBonsai()
@@ -60,14 +63,17 @@ public class DragDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 		return obj;
 	}
 
-	private void SetTransform(Transform obj)
+	private void SetTransform(Transform obj, bool parent = true)
     {
 		obj.localScale = new Vector3(1, 1, 1);
 		var itemRenderer = obj.GetComponent<SpriteRenderer>();
 		itemRenderer.sprite = infoItem.Sprite;
 		obj.localScale *= infoItem.Scale;
 		obj.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		obj.SetParent(Bonsai_Bowl.transform);
+        if(parent)
+        {
+            obj.SetParent(Bonsai_Bowl.transform);
+        }
 	}
 
 	// Update is called once per frame
@@ -81,7 +87,7 @@ public class DragDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
                 // Flag arrastando ativa
                 arrastando = true;
                 CriarCanvasDropGhost();
-               // CriarWorldDropGhost();
+                CriarWorldDropGhost();
             }
 
         }
@@ -90,19 +96,48 @@ public class DragDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         if(arrastando && Input.GetMouseButton(0))
         {
             CanvasDropGhost.transform.position = Input.mousePosition;
+            WorldDropGhost.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
+            if(CheckBonsaiCollisions())
+            {
+                var imageComponent = CanvasDropGhost.GetComponent<Image>();
+                imageComponent.color = new Color(1f, 1f, 1f, 0.7f);
+            }
+            else
+            {
+                var imageComponent = CanvasDropGhost.GetComponent<Image>();
+                imageComponent.color = new Color(1f, 0.4f, 0.4f, 0.7f);
+            }
         }
         // SE ESTIVER ARRASTANDO MAS BTN NAO CLICADO
         else if(arrastando)
         {
             //ARRASTE ACABOU
             arrastando = false;
+
+            if(CheckBonsaiCollisions())
+            {
+                CriarItemBonsai();
+            }
+            
             Destroy(CanvasDropGhost);
-
-            CriarItemBonsai();
-
-            //... codigo de colliders talvez?
+            Destroy(WorldDropGhost);
         }
+    }
+
+    bool CheckBonsaiCollisions()
+    {
+        if(WorldDropGhost.GetComponent<Collider2D>().IsTouching(Bonsai_Bowl.GetComponent<Collider2D>()))
+        {
+            return true;
+            // Transform[] transform_list = Bonsai_Bowl.GetComponentsInChildren<Transform>();
+            // foreach(var value in transform_list)
+            // {
+
+            // }
+        }
+
+        return false;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
