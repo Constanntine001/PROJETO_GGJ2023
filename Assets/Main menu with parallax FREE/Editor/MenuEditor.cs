@@ -25,8 +25,10 @@ public class MenuEditor : Editor {
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("mainBackground"), true);
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("backgrounds"),true);
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("options"), true);
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("Select"), true);
+				EditorGUILayout.PropertyField(serializedObject.FindProperty("menuText"), true);
+				EditorGUILayout.PropertyField(serializedObject.FindProperty("Select"), true);
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("SceneSelect"), true);
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("Events"), true);
                 EditorGUILayout.HelpBox("The audio that will be played in the menu.", MessageType.Info);
                 serializedObject.ApplyModifiedProperties();
                 break;
@@ -39,8 +41,10 @@ public class MenuEditor : Editor {
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("mainBackgroundParallax"), true);
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("backgroundsParallax"), true);            
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("options"), true);
+				EditorGUILayout.PropertyField(serializedObject.FindProperty("menuText"), true);
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("Select"), true);
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("SceneSelect"), true);
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("Events"), true);
                 EditorGUILayout.HelpBox("The audio that will be played in the menu.", MessageType.Info);
                 serializedObject.ApplyModifiedProperties();
                 break;

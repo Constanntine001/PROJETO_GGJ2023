@@ -21,17 +21,17 @@ public class SceneController : MonoBehaviour {
 
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                MenuController.instance.closeScenes();
+                MenuController.instance.CloseScenes();
             }
 
             if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
             {
-                MenuController.instance.advanceScene();
+                MenuController.instance.AdvanceScene();
             }
 
             if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
             {
-                MenuController.instance.goBackScene();
+                MenuController.instance.GoBackScene();
             }
 
             if (Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return))

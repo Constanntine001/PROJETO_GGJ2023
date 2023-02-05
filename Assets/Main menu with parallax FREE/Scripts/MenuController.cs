@@ -1,12 +1,10 @@
-﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.UI;
-using System.Collections.Generic;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.Events;
-using System.IO;
 using UnityEngine.SceneManagement;
 
-public class MenuController : MonoBehaviour {
+public class MenuController : MonoBehaviour
+{
 
     public static MenuController instance;
 
@@ -40,8 +38,8 @@ public class MenuController : MonoBehaviour {
     public GameObject mainBackgroundParallax;
     [SerializeField, Tooltip("Introduce the main bck for your menu")]
     public GameObject mainBackground;
-    [SerializeField, HideInInspector]
-    public Text menuText;
+    [SerializeField]
+    public TMP_Text menuText;
     [SerializeField]
     public GameObject[] activeBackground;
 
@@ -74,82 +72,54 @@ public class MenuController : MonoBehaviour {
     [SerializeField, HideInInspector]
     public GameObject exitMenu;
 
-    //Options menu
-    [SerializeField, HideInInspector]
-    public GameObject OptionsMenu;
 
-
-    void Start()
+    private void Start()
     {
         Audio = gameObject.GetComponent<AudioSource>();
         instance = this;
         //Set the activeBackground array length
-        if (useParallax) { activeBackground = new GameObject[backgroundsParallax.Length]; } else { activeBackground = new GameObject[backgrounds.Length]; }
-        initiate();      
+        activeBackground = new GameObject[useParallax ? backgroundsParallax.Length : backgrounds.Length];
+        
+        Initialize();      
     }
 
-	void Update () {
+	private void Update ()
+    {
 
-        if (mainMenu) { 
+        if (!mainMenu) return;
+
         //Changes the text corresponding option
         menuText.text = options[option];
 
         //Deactivate arrows
         //If the option is less than 1 left arrow deactivated
-        if(option < 1)
-        {
-            ArrowL.SetBool("Deactivate", true);
-        }else
-        {
-            ArrowL.SetBool("Deactivate", false);
-        }
+        ArrowL.SetBool("Deactivate", option < 1);
 
         //If the option is the last option deactivate right arrow
-        if (option == options.Length-1)
+        ArrowR.SetBool("Deactivate", option == options.Length - 1);
+
+        //If use keys is active move with the keys pressed
+        if (useKeys)
         {
-            ArrowR.SetBool("Deactivate", true);
-        }
-        else
-        {
-            ArrowR.SetBool("Deactivate", false);
-        }
+            if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+                MoveRight();
 
-            //If use keys is active move with the keys pressed
-            if (useKeys)
-            {
-                if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
-                {
-                    moveRight();
-                }
+            if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+                MoveLeft();
 
-                if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
-                {
-                    moveLeft();
-                }
-
-                //If enter is pressed reproduce the corresponding event
-                if (Input.GetKeyDown(KeyCode.Return))
-                {
-                    pressEnter();
-                }
-            }
+            //If enter is pressed reproduce the corresponding event
+            if (Input.GetKeyDown(KeyCode.Return))
+                PressEnter();
         }
 
-        //Check is the scenes are animating and puts the variable in true or false
-        var anim = backgroundsController.GetComponent<Animation>();
-        if (anim.isPlaying)
-        {
-            isAnimating = true;
-        }else
-        {
-            isAnimating = false;
-        }
+		//Check is the scenes are animating and puts the variable in true or false
+		var anim = backgroundsController.GetComponent<Animation>();
 
-
+        isAnimating = anim.isPlaying;
     }
 
     //Initiate
-    private void initiate()
+    private void Initialize()
     {
         //If use parallax is active then instantiate the parallax main bck
         //Else instantiate the normal background
@@ -192,13 +162,13 @@ public class MenuController : MonoBehaviour {
     }
 
     //Press enter or click on option 
-    public void pressEnter()
+    public void PressEnter()
     {
         Events[option].Invoke();
     }
 
     //Function to go foward in the menu
-    public void moveRight()
+    public void MoveRight()
     {
         if(option < options.Length-1)
         {
@@ -210,7 +180,7 @@ public class MenuController : MonoBehaviour {
     }
 
     //Function to go back in the menu
-    public void moveLeft()
+    public void MoveLeft()
     {
         if (option > 0)
         {
@@ -222,20 +192,14 @@ public class MenuController : MonoBehaviour {
     }
     
     //New Game event
-    public void newGame()
+    public void NewGame()
     {
         //Loads the first scene, change the number to your desired scene
         SceneManager.LoadScene(1);
     }
 
-    //Continue
-    public void continueGame()
-    {
-        //In this part you need to include your save game script to implement the continue function
-    }
-
     //Select scene Event
-    public void selectScene()
+    public void SelectScene()
     {
         Destroy(activeBackground[0]);
         //Instantiate all the backgrounds for the scenes
@@ -259,7 +223,8 @@ public class MenuController : MonoBehaviour {
             }
 
         //If not, we spawn the normal backgrounds
-        }else
+        }
+        else
         {
             for (int i = backgrounds.Length - 1; i > -1; i--)
             {
@@ -280,7 +245,7 @@ public class MenuController : MonoBehaviour {
     }
 
     //Advances throught the Scenes
-    public void advanceScene()
+    public void AdvanceScene()
     {
         //First check if we are animating and if we are not in the last scene
         if (!isAnimating && activeScene < activeBackground.Length)
@@ -313,7 +278,7 @@ public class MenuController : MonoBehaviour {
     }
 
     //Advances throught the Scenes
-    public void goBackScene()
+    public void GoBackScene()
     {
 
         //First check if we are animating and if we are not in the first scene
@@ -344,18 +309,18 @@ public class MenuController : MonoBehaviour {
     }
 
     //Closes the scenes menu
-    public void closeScenes()
+    public void CloseScenes()
     {
         //Destroy all the active backgrounds and restart the menu
         for (int i = 0; i < activeBackground.Length; i++)
         {
             Destroy(activeBackground[i]);
         }
-        initiate();
+        Initialize();
     }
 
     //Opens the exit menu
-    public void exitMenuOpen()
+    public void ExitMenuOpen()
     {
         var animEx = exitMenu.GetComponent<Animation>();
         exitMenu.transform.SetAsLastSibling();
@@ -364,7 +329,7 @@ public class MenuController : MonoBehaviour {
     }
 
     //Closes the exit menu
-    public void exitMenuClose()
+    public void ExitMenuClose()
     {
         var animEx = exitMenu.GetComponent<Animation>();
         animEx.Play("Fade out");
@@ -372,25 +337,12 @@ public class MenuController : MonoBehaviour {
     }
 
     //Exit Game
-    public void exitGame()
+    public void ExitGame()
     {
         Application.Quit();
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
     }
-
-    //Open Options
-    public void openOptions()
-    {
-        OptionsMenu.gameObject.GetComponent<Animation>().Play("Fade In");
-        mainMenu = false;
-        OptionsMenu.transform.SetAsLastSibling();
-    }
-
-    //Close Options
-    public void closeOptions()
-    {
-        OptionsMenu.gameObject.GetComponent<Animation>().Play("Fade out");
-        mainMenu = true;
-    }
-
 }
 
