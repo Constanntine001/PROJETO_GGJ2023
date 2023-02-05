@@ -21,6 +21,8 @@ public class DragDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     GameObject WorldDropGhost;
     GameObject Bonsai_Bowl;
 
+    float colliderDiff = 0f;
+
     public void Start()
     {
         // Acha o canvas que será utilizado para arrastar o objeto sobre a UI
@@ -31,6 +33,7 @@ public class DragDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public void DragAndDropInformation(ItemSO input_infoItem)
     {
         infoItem = input_infoItem;
+        colliderDiff = 1f - (1f - infoItem.UIScale);
     }
 
     void CriarCanvasDropGhost()
@@ -46,7 +49,7 @@ public class DragDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     void CriarWorldDropGhost()
     {
         WorldDropGhost = CreateSpriteRenderer("ItemDragDropGhost", typeof(SpriteRenderer), typeof(BoxCollider2D)).gameObject;
-        WorldDropGhost.GetComponent<BoxCollider2D>().size = new Vector2(1 - infoItem.UIScale, 1 - infoItem.UIScale);
+        WorldDropGhost.GetComponent<BoxCollider2D>().size = new Vector2(colliderDiff,colliderDiff);
         WorldDropGhost.GetComponent<BoxCollider2D>().isTrigger = true;
         WorldDropGhost.GetComponent<SpriteRenderer>().color = new Color(1f,1f,1f,0f);
         SetTransform(WorldDropGhost.transform, false);
@@ -55,7 +58,7 @@ public class DragDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     void CriarItemBonsai()
     {
         var NovoItemBonsai = CreateSpriteRenderer("ItemDragDropBonsai", typeof(SpriteRenderer), typeof(BoxCollider2D), typeof(Rigidbody2D));
-        NovoItemBonsai.GetComponent<BoxCollider2D>().size = new Vector2(1 - infoItem.UIScale, 1 - infoItem.UIScale);
+        NovoItemBonsai.GetComponent<BoxCollider2D>().size = new Vector2(colliderDiff, colliderDiff);
         NovoItemBonsai.GetComponent<BoxCollider2D>().isTrigger = false;
         NovoItemBonsai.GetComponent<Rigidbody2D>().gravityScale = 0;
         NovoItemBonsai.GetComponent<Rigidbody2D>().constraints =  RigidbodyConstraints2D.FreezeRotation;
@@ -96,7 +99,6 @@ public class DragDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
                 CriarCanvasDropGhost();
                 CriarWorldDropGhost();
             }
-
         }
 
         // Se estiver arrastando e o mouse estiver ainda clicado
