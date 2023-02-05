@@ -1,5 +1,7 @@
 using Economy;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +16,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] AudioSource bonsaiChange;
 
+    [SerializeField] private List<GameObject> BonsaiTypes = new List<GameObject>();
+
 
     void Update_Active_Bonsai()
     {
@@ -24,6 +28,12 @@ public class GameManager : MonoBehaviour
     public void Next_Bonsai()
     {
         BONSAI_INDEX ++;
+
+        //Random rnd = new Random();
+        //int randomInt = rnd.Next(3);
+
+        //GameObject newBonsai = Instantiate(BonsaiTypes[randomInt], BONSAI_GROUP.transform);
+
 
         if(BONSAI_INDEX == BONSAI_GROUP.transform.childCount)
         {
