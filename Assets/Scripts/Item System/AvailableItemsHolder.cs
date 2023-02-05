@@ -1,4 +1,5 @@
 ﻿//Maded by Pedro M Marangon
+using Economy;
 using PedroUtils;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,16 +11,8 @@ namespace Items
 		[SerializeField] private ItemUI prefab;
 		[SerializeField] private Transform parent;
 
-		[SerializeField] private List<ItemSO> items;
+		private void Start() => RebuildUI(FindObjectOfType<PlayerInventory>().UnlockedItems);
 
-		private void Start() => RebuildUI(items);
-
-		[ContextMenu("Test Item List")]
-		private void TestItemList()
-		{
-			if (!Application.isPlaying) return;
-			RebuildUI(items);
-		}
 
 		public void RebuildUI(List<ItemSO> items)
 		{

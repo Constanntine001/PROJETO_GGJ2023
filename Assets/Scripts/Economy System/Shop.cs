@@ -17,7 +17,13 @@ namespace Economy
 		[Header("Canvas")]
 		[SerializeField] private Canvas canvas;
 		[SerializeField] private GraphicRaycaster raycaster;
-		
+
+		private void Awake()
+		{
+			parent.Clear();
+			HideMenu();
+		}
+
 		[ContextMenu("Show Shop Menu")]
 		public void ShowMenu()
 		{
