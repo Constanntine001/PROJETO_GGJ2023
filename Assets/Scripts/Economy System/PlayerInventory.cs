@@ -25,6 +25,11 @@ namespace Economy
 			}
 		}
 
+		private void Start()
+		{
+			Money = 0;
+		}
+
 		public void AddMoney(int amount) => Money += amount;
 		public void SpendMoney(int amount) => Money -= amount;
 

@@ -32,12 +32,22 @@ public class DragDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void Start()
     {
-        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
-        dragCanvas = gm.CANVAS_DRAG_DROP;
-        Bonsai_Bowl = gm.ACTIVE_BONSAI;
 
-        putInBonsai = GameObject.Find("putInBonsai").GetComponent<AudioSource>();
-        itemPickup = GameObject.Find("itemPickup").GetComponent<AudioSource>();
+
+        var gameManagerGO = GameObject.Find("GameManager");
+        var putInBonsaiGO = GameObject.Find("putInBonsai");
+        var itemPickupGO = GameObject.Find("itemPickup");
+
+        if(gameManagerGO != null)
+		{
+			gm = gameManagerGO.GetComponent<GameManager>();
+		    dragCanvas = gm.CANVAS_DRAG_DROP;
+            Bonsai_Bowl = gm.ACTIVE_BONSAI;
+		}
+
+
+        if(putInBonsaiGO != null) putInBonsai = putInBonsaiGO.GetComponent<AudioSource>();
+        if(itemPickupGO != null) itemPickup = itemPickupGO.GetComponent<AudioSource>();
     }
 
     public void DragAndDropInformation(ItemSO input_infoItem)
@@ -59,8 +69,9 @@ public class DragDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     void CriarWorldDropGhost()
     {
         WorldDropGhost = CreateSpriteRenderer("ItemDragDropGhost", typeof(SpriteRenderer), typeof(BoxCollider2D)).gameObject;
-        WorldDropGhost.GetComponent<BoxCollider2D>().size = new Vector2(colliderDiff,colliderDiff);
-        WorldDropGhost.GetComponent<BoxCollider2D>().isTrigger = true;
+        var boxCollider = WorldDropGhost.GetComponent<BoxCollider2D>();
+        boxCollider.size = new Vector2(colliderDiff,colliderDiff);
+        boxCollider.isTrigger = true;
         WorldDropGhost.GetComponent<SpriteRenderer>().color = new Color(1f,1f,1f,0f);
         SetTransform(WorldDropGhost.transform, false);
     }

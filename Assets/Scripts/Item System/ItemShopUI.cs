@@ -44,7 +44,6 @@ namespace Items
 			}
 
 			nameText.text = item.Name;
-			this.Log("!@#)%R@I#");
 
 			itemImage.sprite = item.Sprite;
 			itemImage.color = Color.white;
@@ -55,16 +54,9 @@ namespace Items
 			bool playerContainsItem = playerInventory.UnlockedItems.Contains(item);
 			bool canAffordItem = playerInventory.Money >= item.Price;
 
-
-
-			this.Log($"Can Afford Item (having {playerInventory.Money} at {item.Price}): {canAffordItem}",
-						$"Player contains item {item.Name}: {playerContainsItem}");
-
-
 			overlayText.enabled = overlayImage.enabled = playerContainsItem;
 
 			itemButton.interactable = !playerContainsItem && canAffordItem;
-
 
 			itemButton.GetComponent<Image>().color = Color.white;
 

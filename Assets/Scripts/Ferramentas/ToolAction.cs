@@ -8,9 +8,10 @@ public class ToolAction : MonoBehaviour
     //This script does the tool specific action when inside
     //correct spot
     // Start is called before the first frame update
-    public string nomeCollider = "BONSAI_BOWL";
+    public string nomeCollider = "BonsaiBowl";
     public UnityEvent toolActionEvent;
     public UnityEvent stopToolActionEvent;
+    [SerializeField] private Animator anim;
     GameObject Bonsai_Bowl;
 
     public void Start(){
@@ -23,9 +24,25 @@ public class ToolAction : MonoBehaviour
         
     }
 
-    void OnTriggerStay2D(Collider2D coll) {
+	void OnTriggerEnter2D(Collider2D coll)
+	{
+		if (coll.CompareTag(nomeCollider))
+		{
+            anim.Play("Tesoura cortando");
+		}
+	}
+
+	void OnTriggerExit2D(Collider2D coll)
+	{
+		if (coll.CompareTag(nomeCollider))
+		{
+			anim.Play("Idle");
+		}
+	}
+
+	void OnTriggerStay2D(Collider2D coll) {
         Debug.Log("Collide");
-        if (coll.name == nomeCollider) {
+        if (coll.CompareTag(nomeCollider)) {
             toolActionEvent.Invoke();
         }
     }

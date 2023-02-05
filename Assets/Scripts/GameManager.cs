@@ -1,3 +1,4 @@
+using Economy;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,7 +25,14 @@ public class GameManager : MonoBehaviour
     [ContextMenu("Next_Bonsai")]
     public void Next_Bonsai()
     {
-        BONSAI_INDEX += 1;
+        BONSAI_INDEX ++;
+
+        if(BONSAI_INDEX == BONSAI_GROUP.transform.childCount)
+        {
+            FindObjectOfType<Shop>().ShowMenu();
+            return;
+        }
+
         if(BONSAI_INDEX < BONSAI_GROUP.transform.childCount)
         {    
             targetLerpX = BONSAI_INDEX * 15;
