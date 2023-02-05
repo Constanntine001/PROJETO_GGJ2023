@@ -16,5 +16,5 @@ MonoBehaviour:
   <Sprite>k__BackingField: {fileID: -212644346, guid: 3e36784588ed83341b6faa6b0ecd73af, type: 3}
   <Dependencies>k__BackingField: {fileID: 0}
   <Price>k__BackingField: 20
-  <Scale>k__BackingField: 1
+  <Scale>k__BackingField: 0.5
   <UIScale>k__BackingField: 0.355

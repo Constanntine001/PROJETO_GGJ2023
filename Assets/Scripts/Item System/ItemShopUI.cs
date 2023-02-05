@@ -46,7 +46,7 @@ namespace Items
 				return;
 			}
 
-			nameText.text = item.Name;
+			nameText.text = item.name;
 
 			itemImage.sprite = item.Sprite;
 			itemImage.color = Color.white;

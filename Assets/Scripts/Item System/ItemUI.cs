@@ -34,7 +34,7 @@ namespace Items
 				return;
 			}
 
-			if(nameText != null) nameText.text = item.Name;
+			if(nameText != null) nameText.text = item.name;
 			
 			if (itemImage != null)
 			{
