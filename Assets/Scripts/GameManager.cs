@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private List<GameObject> BonsaiTypes = new List<GameObject>();
 
-
     void Update_Active_Bonsai()
     {
         ACTIVE_BONSAI = BONSAI_GROUP.transform.GetChild(BONSAI_INDEX).gameObject;
@@ -27,19 +26,13 @@ public class GameManager : MonoBehaviour
     [ContextMenu("Next_Bonsai")]
     public void Next_Bonsai()
     {
-        BONSAI_INDEX ++;
+        BONSAI_INDEX++;
 
-        //Random rnd = new Random();
-        //int randomInt = rnd.Next(3);
+        int randomInt = Random.Range(0, 3);
 
-        //GameObject newBonsai = Instantiate(BonsaiTypes[randomInt], BONSAI_GROUP.transform);
-
-
-        if(BONSAI_INDEX == BONSAI_GROUP.transform.childCount)
-        {
-            FindObjectOfType<Shop>().ShowMenu();
-            return;
-        }
+        Transform lastTransform = BONSAI_GROUP.transform.GetChild(BONSAI_GROUP.transform.childCount - 1);
+        GameObject newBonsai = Instantiate(BonsaiTypes[randomInt], BONSAI_GROUP.transform);
+        newBonsai.transform.localPosition = new Vector3(lastTransform.localPosition.x - 15, lastTransform.localPosition.y, lastTransform.localPosition.z);
 
         if(BONSAI_INDEX < BONSAI_GROUP.transform.childCount)
         {
