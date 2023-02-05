@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] float changeSpeed = 1f;
     int targetLerpX = 0;
 
+    [SerializeField] AudioSource bonsaiChange;
+
 
     void Update_Active_Bonsai()
     {
@@ -20,13 +22,16 @@ public class GameManager : MonoBehaviour
     }
 
     [ContextMenu("Next_Bonsai")]
-    void Next_Bonsai()
+    public void Next_Bonsai()
     {
         BONSAI_INDEX += 1;
         if(BONSAI_INDEX < BONSAI_GROUP.transform.childCount)
         {    
             targetLerpX = BONSAI_INDEX * 15;
             Update_Active_Bonsai();
+
+            //Audio
+            bonsaiChange.Play();
         }
     }
 
@@ -39,6 +44,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        BONSAI_GROUP.transform.position = Vector2.Lerp(BONSAI_GROUP.transform.position, new Vector2(targetLerpX, 0), (Time.deltaTime * changeSpeed));     
+        BONSAI_GROUP.transform.position = Vector2.Lerp(BONSAI_GROUP.transform.position, new Vector2(targetLerpX, BONSAI_GROUP.transform.position.y), (Time.deltaTime * changeSpeed));     
     }
 }

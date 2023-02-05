@@ -20,6 +20,9 @@ public class DragDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     GameObject dragCanvas;
     GameObject Bonsai_Bowl;
 
+    AudioSource putInBonsai;
+    AudioSource itemPickup;
+
     //Itens instanciados
     [SerializeField] ItemSO infoItem;
     GameObject CanvasDropGhost;
@@ -32,6 +35,9 @@ public class DragDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         dragCanvas = gm.CANVAS_DRAG_DROP;
         Bonsai_Bowl = gm.ACTIVE_BONSAI;
+
+        putInBonsai = GameObject.Find("putInBonsai").GetComponent<AudioSource>();
+        itemPickup = GameObject.Find("itemPickup").GetComponent<AudioSource>();
     }
 
     public void DragAndDropInformation(ItemSO input_infoItem)
@@ -101,6 +107,10 @@ public class DragDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             {
                 // Flag arrastando ativa
                 arrastando = true;
+
+                //Audio
+                itemPickup.Play();
+                
                 CriarCanvasDropGhost();
                 CriarWorldDropGhost();
             }
@@ -132,6 +142,7 @@ public class DragDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             if(CheckBonsaiCollisions())
             {
                 CriarItemBonsai();
+                putInBonsai.Play();
             }
             
             Destroy(CanvasDropGhost);
@@ -147,7 +158,7 @@ public class DragDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         if(dropGhostCollider.IsTouching(Bonsai_Bowl.GetComponent<Collider2D>()))
         {
             int bonsaiChildCount = Bonsai_Bowl.transform.childCount;
-            if(bonsaiChildCount < maxBonsaiItems)
+            if(bonsaiChildCount < (Bonsai_Bowl.GetComponent<MaxBonsaiItems>().MaxItems))
             {
                 return true;
             }
