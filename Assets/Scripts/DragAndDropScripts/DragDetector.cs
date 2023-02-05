@@ -129,12 +129,12 @@ public class DragDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         if(WorldDropGhost.GetComponent<Collider2D>().IsTouching(Bonsai_Bowl.GetComponent<Collider2D>()))
         {
+            return true;
             // Transform[] transform_list = Bonsai_Bowl.GetComponentsInChildren<Transform>();
             // foreach(var value in transform_list)
             // {
 
             // }
-            return true;
         }
 
         return false;
