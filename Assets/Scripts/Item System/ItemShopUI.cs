@@ -30,7 +30,7 @@ namespace Items
 		{
 			PlayerInventory playerInventory = FindObjectOfType<PlayerInventory>();
 			this.Log("TESTE");
-			playerInventory.UnlockedItems.Add(item);
+			playerInventory.AddItem(item);
 			playerInventory.SpendMoney(item.Price);
 			UpdateUI();
 		}

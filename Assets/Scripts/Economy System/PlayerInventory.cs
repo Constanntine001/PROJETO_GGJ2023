@@ -13,6 +13,7 @@ namespace Economy
 		private AvailableItemsHolder availableItemsHolder;
 
 		public event Action OnMoneyChanged;
+		public event Action OnItemAdded;
 
 		public int Money
 		{
@@ -30,6 +31,7 @@ namespace Economy
 		public void AddItem(ItemSO item)
 		{
 			UnlockedItems.Add(item);
+
 			availableItemsHolder.RebuildUI(UnlockedItems);
 		}
 
