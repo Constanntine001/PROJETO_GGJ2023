@@ -34,9 +34,13 @@ public class GameManager : MonoBehaviour
         GameObject newBonsai = Instantiate(BonsaiTypes[randomInt], BONSAI_GROUP.transform);
         newBonsai.transform.localPosition = new Vector3(lastTransform.localPosition.x - 15, lastTransform.localPosition.y, lastTransform.localPosition.z);
 
+        Debug.Log("Bonsai Group: " + BONSAI_GROUP.name);
+        Debug.Log("Bonsai Group Child Count: " + BONSAI_GROUP.transform.childCount);
+
+        if(ACTIVE_BONSAI.transform.childCount > 0) FindObjectOfType<PlayerInventory>().AddMoney(50);
+
         if(BONSAI_INDEX < BONSAI_GROUP.transform.childCount)
         {
-            FindObjectOfType<PlayerInventory>().AddMoney(50);
 
             targetLerpX = BONSAI_INDEX * 15;
             Update_Active_Bonsai();

@@ -2,7 +2,11 @@ using UnityEngine;
 
 public class Draggable : MonoBehaviour
 {
-    private Camera myCam;
+
+	private static readonly Quaternion DEFAULT_ROT = Quaternion.Euler(0, 0, 180);
+	private static readonly Quaternion HOLDING_ROT = Quaternion.Euler(0, 0, -90);
+
+	private Camera myCam;
     
     private float startXPos;
     private float startYPos;
@@ -35,12 +39,14 @@ public class Draggable : MonoBehaviour
         startYPos = mousePos.y - transform.localPosition.y;
 
         isDragging = true;
+
+        transform.rotation = HOLDING_ROT;
     }
 
     private void OnMouseUp()
     {
         isDragging = false;
-        transform.position = ogPos;
+        transform.SetPositionAndRotation(ogPos, DEFAULT_ROT);
     }
 
     public void DragObject()

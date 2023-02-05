@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.Events;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ToolAction : MonoBehaviour
 {
@@ -11,18 +9,15 @@ public class ToolAction : MonoBehaviour
     public string nomeCollider = "BonsaiBowl";
     public UnityEvent toolActionEvent;
     public UnityEvent stopToolActionEvent;
-    [SerializeField] private Animator anim;
 
 	void OnTriggerEnter2D(Collider2D coll)
 	{
-        if (!anim || !coll.CompareTag(nomeCollider)) return;
-        anim?.Play("Tesoura cortando");
+        if (!coll.CompareTag(nomeCollider)) return;
 	}
 
 	void OnTriggerExit2D(Collider2D coll)
 	{
-        if(!anim || !coll.CompareTag(nomeCollider)) return;
-        anim?.Play("Idle");
+        if (!coll.CompareTag(nomeCollider)) return;
 	}
 
 	void OnTriggerStay2D(Collider2D coll)
@@ -32,6 +27,4 @@ public class ToolAction : MonoBehaviour
         Debug.Log("Collide");
         toolActionEvent.Invoke();
     }
-
-   
 }
