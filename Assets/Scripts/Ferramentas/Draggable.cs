@@ -54,7 +54,8 @@ public class Draggable : MonoBehaviour
         }
 
         mousePos = myCam.ScreenToWorldPoint(mousePos);
-        Vector3 pos = new Vector3(mousePos.x - startXPos, mousePos.y - startYPos, transform.localPosition.z);
+        Vector2 pos = new Vector3(mousePos.x - startXPos, mousePos.y - startYPos);
         transform.localPosition = Vector3.Lerp(transform.localPosition, pos, 5);
+        //transform.GetComponent<Rigidbody2D>().AddForceAtPosition( transform.up *pos, mousePos);
     }
 }

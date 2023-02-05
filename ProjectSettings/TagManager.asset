@@ -42,3 +42,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Layer Tool
+    uniqueID: 1793725707
+    locked: 0

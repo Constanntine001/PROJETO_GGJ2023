@@ -28,7 +28,7 @@ public class ToolAction : MonoBehaviour
 	{
 		if (coll.CompareTag(nomeCollider))
 		{
-            anim.Play("Tesoura cortando");
+            anim?.Play("Tesoura cortando");
 		}
 	}
 
@@ -36,7 +36,7 @@ public class ToolAction : MonoBehaviour
 	{
 		if (coll.CompareTag(nomeCollider))
 		{
-			anim.Play("Idle");
+			anim?.Play("Idle");
 		}
 	}
 

@@ -10,9 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e85925625dfc893438d4f4b278b820e8, type: 3}
-  m_Name: Test Item 2
+  m_Name: Zulinha 6
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Test Item 2
-  <Sprite>k__BackingField: {fileID: 21300000, guid: 8bc6698472dc86548bb3f9945feda441, type: 3}
+  <Name>k__BackingField: Zulinha 6
+  <Sprite>k__BackingField: {fileID: 1799954124, guid: 284e0e1aaeefcb142a155a455fe82c70, type: 3}
   <Dependencies>k__BackingField: {fileID: 0}
-  <Price>k__BackingField: 165
+  <Price>k__BackingField: 999
+  <Scale>k__BackingField: 1
+  <UIScale>k__BackingField: 0.355
