@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6174523611906812166}
   - component: {fileID: 6174523611906812167}
   - component: {fileID: 6174523611906812164}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79,7 +79,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67c1006380474044890df5839cabf405, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myCam: {fileID: 0}
 --- !u!70 &6174523611906812164
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -107,7 +106,7 @@ GameObject:
   - component: {fileID: 6174523612108581203}
   - component: {fileID: 6174523612108581200}
   - component: {fileID: 6174523612108581204}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Scissor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +120,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6174523612108581212}
-  m_LocalRotation: {x: -0, y: -0, z: 0.32650733, w: 0.9451947}
+  m_LocalRotation: {x: -0, y: -0, z: 0.44659904, w: 0.89473426}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.0000128, y: 0.99998724, z: 1}
   m_ConstrainProportionsScale: 0
@@ -178,7 +177,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &6174523612108581204

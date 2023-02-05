@@ -11,7 +11,6 @@ namespace Items
 	{
 		[Header("Item SO")]
 		[SerializeField] private ItemSO item;
-
 		[Header("Strings")]
 		[SerializeField] private string adquired = "Adquired";
 		[SerializeField] private string dontHaveEnoughMoney = "Not enough cash";
@@ -23,16 +22,20 @@ namespace Items
 		[SerializeField] private Button itemButton;
 		[SerializeField] private Image itemImage;
 		[SerializeField] private Image overlayImage;
+		private Shop shop;
 
-		public void SetItem(ItemSO item) => this.item = item;
+		public void SetItem(ItemSO item, Shop shop)
+		{
+			this.item = item;
+			this.shop = shop;
+		}
 
 		public void BuyItem()
 		{
 			PlayerInventory playerInventory = FindObjectOfType<PlayerInventory>();
-			this.Log("TESTE");
 			playerInventory.AddItem(item);
 			playerInventory.SpendMoney(item.Price);
-			UpdateUI();
+			shop.ShowMenu();
 		}
 
 		public void UpdateUI()

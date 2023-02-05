@@ -32,7 +32,7 @@ namespace Economy
 			foreach (ItemSO item in itemsToBuy)
 			{
 				ItemShopUI instance = Instantiate(itemButtonPrefab, parent);
-				instance.SetItem(item);
+				instance.SetItem(item, this);
 				instance.UpdateUI();
 			}
 			SetCanvasEnabled(true);

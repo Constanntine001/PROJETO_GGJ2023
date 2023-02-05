@@ -32,8 +32,6 @@ public class DragDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void Start()
     {
-
-
         var gameManagerGO = GameObject.Find("GameManager");
         var putInBonsaiGO = GameObject.Find("putInBonsai");
         var itemPickupGO = GameObject.Find("itemPickup");
@@ -44,7 +42,6 @@ public class DragDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 		    dragCanvas = gm.CANVAS_DRAG_DROP;
             Bonsai_Bowl = gm.ACTIVE_BONSAI;
 		}
-
 
         if(putInBonsaiGO != null) putInBonsai = putInBonsaiGO.GetComponent<AudioSource>();
         if(itemPickupGO != null) itemPickup = itemPickupGO.GetComponent<AudioSource>();
@@ -79,10 +76,16 @@ public class DragDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     void CriarItemBonsai()
     {
         var NovoItemBonsai = CreateSpriteRenderer("ItemDragDropBonsai", typeof(SpriteRenderer), typeof(BoxCollider2D), typeof(Rigidbody2D));
-        NovoItemBonsai.GetComponent<BoxCollider2D>().size = new Vector2(colliderDiff, colliderDiff);
-        NovoItemBonsai.GetComponent<BoxCollider2D>().isTrigger = false;
-        NovoItemBonsai.GetComponent<Rigidbody2D>().gravityScale = 0;
-        NovoItemBonsai.GetComponent<Rigidbody2D>().constraints =  RigidbodyConstraints2D.FreezeRotation;
+
+        NovoItemBonsai.gameObject.layer = LayerMask.NameToLayer("Item");
+
+        var boxCollider = NovoItemBonsai.GetComponent<BoxCollider2D>();
+        var rigidbody = NovoItemBonsai.GetComponent<Rigidbody2D>();
+
+        boxCollider.size = new Vector2(colliderDiff, colliderDiff);
+        boxCollider.isTrigger = false;
+        rigidbody.gravityScale = 0;
+        rigidbody.constraints =  RigidbodyConstraints2D.FreezeRotation;
         SetTransform(NovoItemBonsai);
     }
 

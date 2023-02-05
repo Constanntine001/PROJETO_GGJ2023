@@ -12,39 +12,25 @@ public class ToolAction : MonoBehaviour
     public UnityEvent toolActionEvent;
     public UnityEvent stopToolActionEvent;
     [SerializeField] private Animator anim;
-    GameObject Bonsai_Bowl;
-
-    public void Start(){
-        Bonsai_Bowl = GameObject.Find(nomeCollider);
-    }
-
-
-    // Update is called once per frame
-    void Update(){
-        
-    }
 
 	void OnTriggerEnter2D(Collider2D coll)
 	{
-		if (coll.CompareTag(nomeCollider))
-		{
-            anim?.Play("Tesoura cortando");
-		}
+        if (!anim || !coll.CompareTag(nomeCollider)) return;
+        anim?.Play("Tesoura cortando");
 	}
 
 	void OnTriggerExit2D(Collider2D coll)
 	{
-		if (coll.CompareTag(nomeCollider))
-		{
-			anim?.Play("Idle");
-		}
+        if(!anim || !coll.CompareTag(nomeCollider)) return;
+        anim?.Play("Idle");
 	}
 
-	void OnTriggerStay2D(Collider2D coll) {
+	void OnTriggerStay2D(Collider2D coll)
+    {
+        if(!coll.CompareTag(nomeCollider)) return;
+        
         Debug.Log("Collide");
-        if (coll.CompareTag(nomeCollider)) {
-            toolActionEvent.Invoke();
-        }
+        toolActionEvent.Invoke();
     }
 
    

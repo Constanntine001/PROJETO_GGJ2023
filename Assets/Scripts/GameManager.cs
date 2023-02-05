@@ -1,8 +1,5 @@
 using Economy;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Economy;
 
 public class GameManager : MonoBehaviour
 {
@@ -35,7 +32,7 @@ public class GameManager : MonoBehaviour
         }
 
         if(BONSAI_INDEX < BONSAI_GROUP.transform.childCount)
-        {    
+        {
             FindObjectOfType<PlayerInventory>().AddMoney(50);
 
             targetLerpX = BONSAI_INDEX * 15;

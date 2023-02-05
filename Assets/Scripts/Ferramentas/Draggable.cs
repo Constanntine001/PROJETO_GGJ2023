@@ -2,34 +2,32 @@ using UnityEngine;
 
 public class Draggable : MonoBehaviour
 {
-    public Camera myCam;
+    private Camera myCam;
     
     private float startXPos;
     private float startYPos;
 
     private bool isDragging = false;
 
-    private void Start() {
+	private Vector3 ogPos;
+
+	private void Start()
+    {
         myCam = Camera.main;
+        ogPos = transform.position;
     }
 
-    private void Update()
-    {
-        if (isDragging)
-        {
-            DragObject();
-        }
-    }
+	private void Update()
+	{
+		if (!isDragging) return;
+		DragObject();
+	}
 
-    private void OnMouseDown()
+	private void OnMouseDown()
     {
-
         Vector3 mousePos = Input.mousePosition;
 
-        if (!myCam.orthographic)
-        {
-            mousePos.z = 10;
-        }
+        if (!myCam.orthographic) mousePos.z = 10;
 
         mousePos = myCam.ScreenToWorldPoint(mousePos);
 
@@ -42,20 +40,17 @@ public class Draggable : MonoBehaviour
     private void OnMouseUp()
     {
         isDragging = false;
+        transform.position = ogPos;
     }
 
     public void DragObject()
     {
         Vector3 mousePos = Input.mousePosition;
 
-        if(!myCam.orthographic)
-        {
-            mousePos.z = 10;
-        }
+        if(!myCam.orthographic)  mousePos.z = 10;
 
         mousePos = myCam.ScreenToWorldPoint(mousePos);
         Vector2 pos = new Vector3(mousePos.x - startXPos, mousePos.y - startYPos);
         transform.localPosition = Vector3.Lerp(transform.localPosition, pos, 5);
-        //transform.GetComponent<Rigidbody2D>().AddForceAtPosition( transform.up *pos, mousePos);
     }
 }

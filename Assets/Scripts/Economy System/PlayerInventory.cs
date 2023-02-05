@@ -28,6 +28,7 @@ namespace Economy
 		private void Start()
 		{
 			Money = 0;
+			availableItemsHolder = FindObjectOfType<AvailableItemsHolder>();
 		}
 
 		public void AddMoney(int amount) => Money += amount;
