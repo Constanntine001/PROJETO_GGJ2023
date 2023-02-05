@@ -13,6 +13,9 @@ public class DragDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     [SerializeField] ItemSO infoItem;
 
+
+    int maxBonsaiItems = 5;
+
     GameObject dragCanvas;
     GameObject CanvasDropGhost;
     GameObject WorldDropGhost;
@@ -51,7 +54,11 @@ public class DragDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     void CriarItemBonsai()
     {
-        var NovoItemBonsai = CreateSpriteRenderer("ItemDragDropBonsai", typeof(SpriteRenderer));
+        var NovoItemBonsai = CreateSpriteRenderer("ItemDragDropBonsai", typeof(SpriteRenderer), typeof(BoxCollider2D), typeof(Rigidbody2D));
+        NovoItemBonsai.GetComponent<BoxCollider2D>().size = new Vector2(1 - infoItem.UIScale, 1 - infoItem.UIScale);
+        NovoItemBonsai.GetComponent<BoxCollider2D>().isTrigger = false;
+        NovoItemBonsai.GetComponent<Rigidbody2D>().gravityScale = 0;
+        NovoItemBonsai.GetComponent<Rigidbody2D>().constraints =  RigidbodyConstraints2D.FreezeRotation;
         SetTransform(NovoItemBonsai);
     }
 
@@ -127,14 +134,14 @@ public class DragDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     bool CheckBonsaiCollisions()
     {
-        if(WorldDropGhost.GetComponent<Collider2D>().IsTouching(Bonsai_Bowl.GetComponent<Collider2D>()))
+        var dropGhostCollider = WorldDropGhost.GetComponent<Collider2D>();
+        if(dropGhostCollider.IsTouching(Bonsai_Bowl.GetComponent<Collider2D>()))
         {
-            return true;
-            // Transform[] transform_list = Bonsai_Bowl.GetComponentsInChildren<Transform>();
-            // foreach(var value in transform_list)
-            // {
-
-            // }
+            int bonsaiChildCount = Bonsai_Bowl.transform.childCount;
+            if(bonsaiChildCount < maxBonsaiItems)
+            {
+                return true;
+            }
         }
 
         return false;
